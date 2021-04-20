@@ -29,9 +29,9 @@ def main():
 
     OBJECTS = [
         # Kugelfläche rot
-        Sphere(Point(0.75, -0.1, 1.0), 0.6, Material(Color.from_hex("#FF0000"))),
+        Sphere(Point(0.75, -0.1, 1.0), 0.8, Material(Color.from_hex("#FF0000"))),
         # Kugelfläche gelb
-        Sphere(Point(-0.75, -0.1, 2.5), 0.6, Material(Color.from_hex("#FFFF00")))
+        Sphere(Point(-0.75, -0.1, 2.5), 0.8, Material(Color.from_hex("#FFFF00")))
     ]
     # Punktlichter: Keine Beleuchtung nur Objektfarbe
     LIGHTS = [Light(Point(1.5, -0.5, -10.0), Material(Color.from_hex("#FFFFFF"))),
