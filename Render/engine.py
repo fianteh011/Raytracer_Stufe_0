@@ -128,35 +128,42 @@ class RenderEngine:
         # Nur Objektfarbe anzeigen
         obj_color = material.color_at(hit_pos)
 
+        augpunkt = scene.camera - hit_pos
+
+        specular_k = 51
+
         # Ambientes Licht = Grundhelligkeit der Szene
         color = material.ambient * Color.from_hex("#000000")
-        # specular potenz:
-        # spekular_k = 50.00 # wird später im Praktikum 2
 
         # gehe in jedem Licht duch und berechne schatten
         for light in scene.lights:
             # Abstand zwischen Lichtquelle und Kollisionspunkt
             # to_lights = Ray(hit_pos, light.position - hit_pos)
-            augpunkt = hit_pos
+            origin = hit_pos
             direction = light.position - hit_pos
 
             # erzeuge einen Ray
-            new_ray_l = Ray(augpunkt, direction)
+            new_ray_l = Ray(origin, direction)
             """Lambert-Shading für diffuses Licht"""
             # eintreffendes Licht streut in alle Richtungnen (matte Oberflaeche)
             # cos (phi) = <normal, new_ray_l.direction>
             cos = normal.dot_product(new_ray_l.direction)
 
-            color += (obj_color
-                      * material.diffuse
-                      * max(cos, 0))
             # max: um negative Werten zu vermeiden
             # z.B. wenn das Licht nur die vordere Oberfläche aufleuchtet
+            lambert = obj_color * material.diffuse * max(cos, 0)
+
+            color += lambert
 
             # Blinn Phong-Beleuchtungsmodell fasst die drei Beiträgt zusammen (ambient, diffuse und speuklar)-->wird
-            # später im Praktikum 2
-            # half_vector = (to_lights.direction + to_cam).normalize() # wird später im
-            # Praktikum 2 color += ((light.color * material.specular) * max(normal.dot_product(half_vector),
-            # 0))# wird später im Praktikum 2
+            # Praktikum 2
+            halfway_vector = (new_ray_l.direction + augpunkt).normalize() # wird später im
+
+            cos2 = normal.dot_product(halfway_vector)
+
+            blinnPhong = (light.color * material.specular * max(cos2, 0) ** specular_k)
+
+            color += blinnPhong
+
         return color
 

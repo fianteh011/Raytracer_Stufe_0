@@ -27,15 +27,36 @@ def main():
 
     ##### Objekte der Szene lokal erzeugen
 
+    ##FARBEN
+    rot = Color.from_hex("#FF0000")
+    gelb = Color.from_hex("#FFFF00")
+
+    ##Kugeln
+    kugel1 = Sphere(Point(0.75, -0.1, 1.0), 0.6, Material(rot))
+    kugel2 = Sphere(Point(-0.75, -0.1, 2.5), 0.6, Material(gelb))
+
+    testKugel = Sphere(Point(0, 0, 0), 0.5, Material(rot))
+
     OBJECTS = [
-        # Kugelfläche rot
-        Sphere(Point(0.75, -0.1, 1.0), 0.8, Material(Color.from_hex("#FF0000"))),
-        # Kugelfläche gelb
-        Sphere(Point(-0.75, -0.1, 2.5), 0.8, Material(Color.from_hex("#FFFF00")))
+        # rote Kugel1
+        kugel1,
+        # gelbe kugel2
+        kugel2
+        #testKugel
     ]
     # Punktlichter: Keine Beleuchtung nur Objektfarbe
-    LIGHTS = [Light(Point(1.5, -0.5, -10.0), Material(Color.from_hex("#FFFFFF"))),
-              Light(Point(-0.5, -10.5, 0.0), Material(Color.from_hex("#F0F0F0")))]
+    ##Farben
+    weiss = Color.from_hex("#FFFFFF")
+    grau = Color.from_hex("#F0F0F0")
+
+    licht1 = Light(Point(1.5, -0.5, -10.0), weiss)
+    licht2 = Light(Point(-0.5, -10.5, 0.0), grau)
+    LIGHTS = [
+        #weisses Licht
+        licht1,
+        #graues Licht
+        licht2
+    ]
 
     ##### Szene einrichten
     scene = Scene(CAMERA, OBJECTS, LIGHTS, WIDTH, HEIGHT)
