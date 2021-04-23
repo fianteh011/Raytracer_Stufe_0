@@ -130,8 +130,6 @@ class RenderEngine:
 
         augpunkt = scene.camera - hit_pos
 
-        specular_k = 51
-
         # Ambientes Licht = Grundhelligkeit der Szene
         color = material.ambient * Color.from_hex("#000000")
 
@@ -160,8 +158,12 @@ class RenderEngine:
             halfway_vector = (new_ray_l.direction + augpunkt).normalize() # wird später im
 
             cos2 = normal.dot_product(halfway_vector)
-
-            blinnPhong = (light.color * material.specular * max(cos2, 0) ** specular_k)
+            #Phong Parameter
+            #Kupfer: N=13
+            #Gold/Silber: N=51
+            #Schwarzes Plastik: N=32
+            N = 51
+            blinnPhong = (light.color * material.specular * max(cos2, 0) ** N)
 
             color += blinnPhong
 

@@ -12,13 +12,15 @@ from Geometry.sphere import Sphere
 
 ##### Anzeige des Renderfortschritts (True: mit Anzeige, False: ohne Anzeige)
 ZAEHLER = True
-##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
-RENDERED_IMG = "2balls.bmp"
-SHOW = True
+
+SHOW = False
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
-WIDTH = 320
-HEIGHT = 200
+WIDTH = 1600 #320 #800 #1600
+HEIGHT = 1200 #200 #600 #1200
+
+##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
+RENDERED_IMG = "2balls_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".bmp"
 
 
 def main():
