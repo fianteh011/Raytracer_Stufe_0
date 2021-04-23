@@ -4,7 +4,7 @@ from Help.color import Color
 from Help.point import Point
 from Help.image import MyImage
 from Render.light import Light
-from Render.material import Material
+from Render.material import Material, SchachbrettMaterial
 from Render.engine import RenderEngine
 from Render.scene import Scene
 from Render.camera import Camera
@@ -16,11 +16,11 @@ ZAEHLER = True
 SHOW = False
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
-WIDTH = 800 #320 #800 #1600
-HEIGHT = 600 #200 #600 #1200
+WIDTH = 320 #320 #800 #1600
+HEIGHT = 200 #200 #600 #1200
 
 ##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
-RENDERED_IMG = "2balls_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
+RENDERED_IMG = "2balls_schachbrett_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
 
 
 def main():
@@ -37,14 +37,23 @@ def main():
     kugel1 = Sphere(Point(0.75, -0.1, 1.0), 0.6, Material(rot))
     kugel2 = Sphere(Point(-0.75, -0.1, 2.5), 0.6, Material(gelb))
 
-    testKugel = Sphere(Point(0, 0, 0), 0.5, Material(rot))
+    #Schachbrett-Ebene
+    schachbrettMaterial = SchachbrettMaterial(
+        color1=Color.from_hex("#420500"),
+        color2=Color.from_hex("#e6b87d"),
+        ambient=0.2,
+        reflection=0.2
+    )
+    grundebene = Sphere(Point(0, 10000.5, 1), 10000.0, schachbrettMaterial)
+
 
     OBJECTS = [
+        #Schachbrett-Ebene
+        grundebene,
         # rote Kugel1
         kugel1,
         # gelbe kugel2
         kugel2
-        #testKugel
     ]
     # Punktlichter: Keine Beleuchtung nur Objektfarbe
     ##Farben
