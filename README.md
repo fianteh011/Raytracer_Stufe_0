@@ -28,3 +28,7 @@
 </details>
 
 ---
+
+## Aufgabe 3
+### Dreieck
+

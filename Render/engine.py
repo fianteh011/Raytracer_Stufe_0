@@ -137,15 +137,25 @@ class RenderEngine:
         # Schleife über alle Objekte der Szene
         # theoretisch kann ein Objekt verdeckt
         for obj in scene.objects:
-            # Hier wird der Schnittpunkt zwischen Objekt und Strahl berechnet
-            # zunächst nur für Kugelflächen (sphere)
-            distance = obj.intersects(ray)
-            # comparison with is None or is not None
-            # ausrufezeichen sind nicht so übersichtlich
-            if distance is not None and (obj_hit is None or distance < dist_min):
-                dist_min = distance # neu füllen
-                obj_hit = obj
+            if obj.name == "Kugel":
+                # Hier wird der Schnittpunkt zwischen Objekt und Strahl berechnet
+                # zunächst nur für Kugelflächen (sphere)
+                distance = obj.intersects(ray)
+                # comparison with is None or is not None
+                # ausrufezeichen sind nicht so übersichtlich
+                if distance is not None and (obj_hit is None or distance < dist_min):
+                    dist_min = distance # neu füllen
+                    obj_hit = obj
+
+
+            if obj.name == "Dreieck":
+                distance = obj.intersect_t(ray)
+                if distance is not None and (obj_hit is None or distance < dist_min):
+                    dist_min = distance
+                    obj_hit = obj
+
         return dist_min, obj_hit
+
 
     def color_at_hit(self, obj_hit, hit_pos, normal, scene):
         # Farbinformation des getroffenen Objekts im Schnittpunkt ermitteln

@@ -3,17 +3,19 @@ Stufe_3: Es werden nur die Objektfarben ermittelt"""
 from Help.color import Color
 from Help.point import Point
 from Help.image import MyImage
+from Help.vector import Vector
 from Render.light import Light
 from Render.material import Material, SchachbrettMaterial
 from Render.engine import RenderEngine
 from Render.scene import Scene
 from Render.camera import Camera
 from Geometry.sphere import Sphere
+from Geometry.triangle import Triangle
 
 ##### Anzeige des Renderfortschritts (True: mit Anzeige, False: ohne Anzeige)
 ZAEHLER = True
 
-SHOW = False
+SHOW = True
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
 WIDTH = 320 #320 #800 #1600
@@ -47,6 +49,12 @@ def main():
     )
     grundebene = Sphere(Point(0, 10000.5, 1), 10000.0, schachbrettMaterial)
 
+    #Dreieck
+    A = Point(-4.0, -2.0, 3.0)
+    B = Point(-1.0, 0.0, 3.0)
+    C = Point(1.0, -2.0, 3.0)
+    blau = Color.from_hex("#0000FF")
+    dreieck = Triangle(A, B, C, Material(blau))
 
     OBJECTS = [
         #Schachbrett-Ebene
@@ -54,7 +62,9 @@ def main():
         # rote Kugel1
         kugel1,
         # gelbe kugel2
-        kugel2
+        kugel2,
+        #blaues Dreieck
+        dreieck
     ]
     # Punktlichter: Keine Beleuchtung nur Objektfarbe
     ##Farben
