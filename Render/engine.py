@@ -8,6 +8,10 @@ class RenderEngine:
     """Rendert 3D Objekte in 2D Pixelbilder mittels ray tracing"""
     """Erzeugt Pixel als array"""
 
+    ##Stufe_3
+    MAX_DEPTH = 3
+    MIN_DISPLACE = 0.0001
+
     def rendertask(self, scene, zaehler):
         # Anpassung Bildausgabe (Pixelformat) an "virtuellen Screen [-1,1]x[-1,1]"
         width = scene.width
@@ -99,6 +103,28 @@ class RenderEngine:
         # berechne diffuse und spekular--> wie die Normale auf getroffenen Punkt lautet
         hit_normal = obj_hit.normal(hit_pos)
         color += self.color_at_hit(obj_hit, hit_pos, hit_normal, scene)
+
+        ##Stufe_3 Erweiterung
+        if depth < self.MAX_DEPTH:
+            # Reflektionspunkt mit Störtem verändern, um Selbstreflektion zu vermeiden
+            new_ray_pos = hit_pos + hit_normal * self.MIN_DISPLACE
+
+            # Richtung des reflektierten rays (Strahls) berechnen (CG_2 - Folie 16)
+            # l = -ray.direction
+            # Formel: 2 * <normale, direction> * normale - direction
+            new_ray_dir = (
+                    ray.direction - 2 * ray.direction.dot_product(hit_normal) * hit_normal
+            )
+
+            #Erzeuge neuen reflektierten Strahl
+            new_ray = Ray(new_ray_pos, new_ray_dir)
+
+            #Aufaddieren der durch den Reflektionskoeffizienten abgeschwächten Farb-
+            #information des reflektierten rays (Strahls)
+            color += (
+                self.ray_trace(new_ray, scene, depth + 1 ) * obj_hit.material.reflection
+            )
+
         return color
 
     def find_nearest_hit(self, ray, scene):
@@ -141,11 +167,11 @@ class RenderEngine:
             direction = light.position - hit_pos
 
             # erzeuge einen Ray
-            new_ray_l = Ray(origin, direction)
+            L = Ray(origin, direction)
             """Lambert-Shading für diffuses Licht"""
             # eintreffendes Licht streut in alle Richtungnen (matte Oberflaeche)
             # cos (phi) = <normal, new_ray_l.direction>
-            cos = normal.dot_product(new_ray_l.direction)
+            cos = normal.dot_product(L.direction)
 
             # max: um negative Werten zu vermeiden
             # z.B. wenn das Licht nur die vordere Oberfläche aufleuchtet
@@ -155,7 +181,7 @@ class RenderEngine:
 
             # Blinn Phong-Beleuchtungsmodell fasst die drei Beiträgt zusammen (ambient, diffuse und speuklar)-->wird
             # Praktikum 2
-            halfway_vector = (new_ray_l.direction + augpunkt).normalize() # wird später im
+            halfway_vector = (L.direction + augpunkt).normalize() # wird später im
 
             cos2 = normal.dot_product(halfway_vector)
             #Phong Parameter

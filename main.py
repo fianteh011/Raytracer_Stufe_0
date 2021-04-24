@@ -1,5 +1,5 @@
 """Einfacher raytracer
-Stufe_0: Es werden nur die Objektfarben ermittelt"""
+Stufe_3: Es werden nur die Objektfarben ermittelt"""
 from Help.color import Color
 from Help.point import Point
 from Help.image import MyImage
@@ -16,12 +16,11 @@ ZAEHLER = True
 SHOW = False
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
-WIDTH = 800 #320 #800 #1600
-HEIGHT = 600 #200 #600 #1200
+WIDTH = 320 #320 #800 #1600
+HEIGHT = 200 #200 #600 #1200
 
 ##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
-RENDERED_IMG = "2balls_schachbrett_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
-
+RENDERED_IMG = "stufe3_2balls_schachbrett_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
 
 def main():
     ##### Augpunkt/Camera setzen
@@ -38,9 +37,11 @@ def main():
     kugel2 = Sphere(Point(-0.75, -0.1, 2.5), 0.6, Material(gelb))
 
     #Schachbrett-Ebene
+    braun = Color.from_hex("#4A3601")
+    beige = Color.from_hex("#e7b36e")
     schachbrettMaterial = SchachbrettMaterial(
-        color1=Color.from_hex("#420500"),
-        color2=Color.from_hex("#e6b87d"),
+        color1=braun,
+        color2=beige,
         ambient=0.2,
         reflection=0.2
     )
