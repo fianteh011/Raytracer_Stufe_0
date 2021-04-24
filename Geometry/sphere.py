@@ -1,6 +1,5 @@
 from math import sqrt
 
-
 class Sphere:
     """ Klasse zur Repräsentation von Sphären (Kugelflächen) in 3d"""
 
