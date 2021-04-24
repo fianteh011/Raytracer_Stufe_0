@@ -23,7 +23,7 @@ HEIGHT = 200 #200 #600 #1200
 RENDERED_IMG = "stufe3_2balls_schachbrett_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
 
 def main():
-    ##### Augpunkt/Camera setzen
+    ##### Augpunkt/Camera setzen#
     CAMERA = Camera(0, 0, -1)
 
     ##### Objekte der Szene lokal erzeugen
