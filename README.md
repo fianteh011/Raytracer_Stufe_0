@@ -87,7 +87,7 @@
 
 ---
 
-## Aufgabe 3
+## Aufgabe 3 
 ### Dreieck
 
 ---
