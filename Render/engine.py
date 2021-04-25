@@ -119,6 +119,7 @@ class RenderEngine:
             if distance is not None and (obj_hit is None or distance < dist_min):
                 dist_min = distance # neu füllen
                 obj_hit = obj
+                ww = 0
         return dist_min, obj_hit
 
     def color_at_hit(self, obj_hit, hit_pos, normal, scene):
