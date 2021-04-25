@@ -100,8 +100,6 @@
 
 ---
 
----
-
 <details>
 <summary>800x600</summary>
 <br>
