@@ -9,7 +9,7 @@ class RenderEngine:
     """Erzeugt Pixel als array"""
 
     ##Stufe_3
-    MAX_DEPTH = 3
+    MAX_DEPTH = 5
     MIN_DISPLACE = 0.0001
 
     def rendertask(self, scene, zaehler):
@@ -198,7 +198,7 @@ class RenderEngine:
             #Kupfer: N=13
             #Gold/Silber: N=51
             #Schwarzes Plastik: N=32
-            N = 51
+            N = 50
             blinnPhong = (light.color * material.specular * max(cos2, 0) ** N)
 
             color += blinnPhong
