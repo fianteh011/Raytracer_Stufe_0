@@ -90,8 +90,31 @@
 ## Aufgabe 3
 ### Dreieck
 
+---
+
+<details>
+<summary>320x200</summary>
+<br>
+<img src="./stufe3_2balls_schachbrett_triangle_320x200.PNG">
+</details>
+
+---
+
+---
+
 <details>
 <summary>800x600</summary>
 <br>
 <img src="./stufe3_2balls_schachbrett_triangle_800x600.PNG">
 </details>
+
+---
+
+<details>
+<summary>1600x1200</summary>
+<br>
+<img src="./stufe3_2balls_schachbrett_triangle_1600x1200.PNG">
+</details>
+
+---
+
