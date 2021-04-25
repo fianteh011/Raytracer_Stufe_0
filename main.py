@@ -15,14 +15,14 @@ from Geometry.triangle import Triangle
 ##### Anzeige des Renderfortschritts (True: mit Anzeige, False: ohne Anzeige)
 ZAEHLER = True
 
-SHOW = True
+SHOW = False
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
-WIDTH = 320 #320 #800 #1600
-HEIGHT = 200 #200 #600 #1200
+WIDTH = 800 #320 #800 #1600
+HEIGHT = 600 #200 #600 #1200
 
 ##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
-RENDERED_IMG = "stufe3_2balls_schachbrett_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
+RENDERED_IMG = "stufe3_2balls_schachbrett_triangle_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
 
 def main():
     ##### Augpunkt/Camera setzen#
