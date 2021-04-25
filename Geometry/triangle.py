@@ -43,9 +43,6 @@ class Triangle:
         vu = uu
         v = vo / vu
 
-        #print("u: ", u)
-        #print("v: ", v)
-
         #liegt der Punkt im Dreieck?
         if 0 <= u <= 1 and 0 <= v <= 1 and 0 <= u+v <= 1:
             return True

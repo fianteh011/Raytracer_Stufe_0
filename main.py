@@ -15,11 +15,11 @@ from Geometry.triangle import Triangle
 ##### Anzeige des Renderfortschritts (True: mit Anzeige, False: ohne Anzeige)
 ZAEHLER = True
 
-SHOW = False
+SHOW = True
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
-WIDTH = 800 #320 #800 #1600
-HEIGHT = 600 #200 #600 #1200
+WIDTH = 320 #320 #800 #1600
+HEIGHT = 200 #200 #600 #1200
 
 ##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
 RENDERED_IMG = "stufe3_2balls_schachbrett_triangle_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
@@ -33,10 +33,13 @@ def main():
     ##FARBEN
     rot = Color.from_hex("#FF0000")
     gelb = Color.from_hex("#FFFF00")
+    lila = Color.from_hex("#A0008F")
 
     ##Kugeln
+    #vordere Kugel
     kugel1 = Sphere(Point(0.75, -0.1, 1.0), 0.6, Material(rot))
-    kugel2 = Sphere(Point(-0.75, -0.1, 2.5), 0.6, Material(gelb))
+    #hintere Kugel
+    kugel2 = Sphere(Point(-0.75, -0.1, 2.25), 0.6, Material(lila))
 
     #Schachbrett-Ebene
     braun = Color.from_hex("#4A3601")
