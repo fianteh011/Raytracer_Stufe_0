@@ -8,6 +8,10 @@ class RenderEngine:
     """Rendert 3D Objekte in 2D Pixelbilder mittels ray tracing"""
     """Erzeugt Pixel als array"""
 
+    ##Stufe_3
+    MAX_DEPTH = 5
+    MIN_DISPLACE = 0.0001
+
     def rendertask(self, scene, zaehler):
         # Anpassung Bildausgabe (Pixelformat) an "virtuellen Screen [-1,1]x[-1,1]"
         width = scene.width
@@ -99,6 +103,28 @@ class RenderEngine:
         # berechne diffuse und spekular--> wie die Normale auf getroffenen Punkt lautet
         hit_normal = obj_hit.normal(hit_pos)
         color += self.color_at_hit(obj_hit, hit_pos, hit_normal, scene)
+
+        ##Stufe_3 Erweiterung
+        if depth < self.MAX_DEPTH:
+            # Reflektionspunkt mit Störtem verändern, um Selbstreflektion zu vermeiden
+            new_ray_pos = hit_pos + hit_normal * self.MIN_DISPLACE
+
+            # Richtung des reflektierten rays (Strahls) berechnen (CG_2 - Folie 16)
+            # l = -ray.direction
+            # Formel: 2 * <normale, direction> * normale - direction
+            new_ray_dir = (
+                    ray.direction - 2 * ray.direction.dot_product(hit_normal) * hit_normal
+            )
+
+            #Erzeuge neuen reflektierten Strahl
+            new_ray = Ray(new_ray_pos, new_ray_dir)
+
+            #Aufaddieren der durch den Reflektionskoeffizienten abgeschwächten Farb-
+            #information des reflektierten rays (Strahls)
+            color += (
+                self.ray_trace(new_ray, scene, depth + 1 ) * obj_hit.material.reflection
+            )
+
         return color
 
     def find_nearest_hit(self, ray, scene):
@@ -111,16 +137,25 @@ class RenderEngine:
         # Schleife über alle Objekte der Szene
         # theoretisch kann ein Objekt verdeckt
         for obj in scene.objects:
-            # Hier wird der Schnittpunkt zwischen Objekt und Strahl berechnet
-            # zunächst nur für Kugelflächen (sphere)
-            distance = obj.intersects(ray)
-            # comparison with is None or is not None
-            # ausrufezeichen sind nicht so übersichtlich
-            if distance is not None and (obj_hit is None or distance < dist_min):
-                dist_min = distance # neu füllen
-                obj_hit = obj
-                ww = 0
+            if obj.name == "Kugel":
+                # Hier wird der Schnittpunkt zwischen Objekt und Strahl berechnet
+                # zunächst nur für Kugelflächen (sphere)
+                distance = obj.intersects(ray)
+                # comparison with is None or is not None
+                # ausrufezeichen sind nicht so übersichtlich
+                if distance is not None and (obj_hit is None or distance < dist_min):
+                    dist_min = distance # neu füllen
+                    obj_hit = obj
+
+
+            if obj.name == "Dreieck":
+                distance = obj.intersect_t(ray)
+                if distance is not None and (obj_hit is None or distance < dist_min):
+                    dist_min = distance
+                    obj_hit = obj
+
         return dist_min, obj_hit
+
 
     def color_at_hit(self, obj_hit, hit_pos, normal, scene):
         # Farbinformation des getroffenen Objekts im Schnittpunkt ermitteln
@@ -129,35 +164,44 @@ class RenderEngine:
         # Nur Objektfarbe anzeigen
         obj_color = material.color_at(hit_pos)
 
+        augpunkt = scene.camera - hit_pos
+
         # Ambientes Licht = Grundhelligkeit der Szene
         color = material.ambient * Color.from_hex("#000000")
-        # specular potenz:
-        # spekular_k = 50.00 # wird später im Praktikum 2
 
         # gehe in jedem Licht duch und berechne schatten
         for light in scene.lights:
             # Abstand zwischen Lichtquelle und Kollisionspunkt
             # to_lights = Ray(hit_pos, light.position - hit_pos)
-            augpunkt = hit_pos
+            origin = hit_pos
             direction = light.position - hit_pos
 
             # erzeuge einen Ray
-            new_ray_l = Ray(augpunkt, direction)
+            L = Ray(origin, direction)
             """Lambert-Shading für diffuses Licht"""
             # eintreffendes Licht streut in alle Richtungnen (matte Oberflaeche)
             # cos (phi) = <normal, new_ray_l.direction>
-            cos = normal.dot_product(new_ray_l.direction)
+            cos = normal.dot_product(L.direction)
 
-            color += (obj_color
-                      * material.diffuse
-                      * max(cos, 0))
             # max: um negative Werten zu vermeiden
             # z.B. wenn das Licht nur die vordere Oberfläche aufleuchtet
+            lambert = obj_color * material.diffuse * max(cos, 0)
+
+            color += lambert
 
             # Blinn Phong-Beleuchtungsmodell fasst die drei Beiträgt zusammen (ambient, diffuse und speuklar)-->wird
-            # später im Praktikum 2
-            # half_vector = (to_lights.direction + to_cam).normalize() # wird später im
-            # Praktikum 2 color += ((light.color * material.specular) * max(normal.dot_product(half_vector),
-            # 0))# wird später im Praktikum 2
+            # Praktikum 2
+            halfway_vector = (L.direction + augpunkt).normalize() # wird später im
+
+            cos2 = normal.dot_product(halfway_vector)
+            #Phong Parameter
+            #Kupfer: N=13
+            #Gold/Silber: N=51
+            #Schwarzes Plastik: N=32
+            N = 50
+            blinnPhong = (light.color * material.specular * max(cos2, 0) ** N)
+
+            color += blinnPhong
+
         return color
 

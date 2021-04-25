@@ -22,7 +22,7 @@ WIDTH = 320 #320 #800 #1600
 HEIGHT = 200 #200 #600 #1200
 
 ##### Ausgabe am Bildschirm (True) oder in der angegebenen Datei (False)
-RENDERED_IMG = "stufe3_2balls_schachbrett_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
+RENDERED_IMG = "stufe3_2balls_schachbrett_triangle_" + WIDTH.__str__() + "x" + HEIGHT.__str__() + ".PNG"
 
 def main():
     ##### Augpunkt/Camera setzen#
@@ -33,10 +33,13 @@ def main():
     ##FARBEN
     rot = Color.from_hex("#FF0000")
     gelb = Color.from_hex("#FFFF00")
+    lila = Color.from_hex("#A0008F")
 
     ##Kugeln
+    #vordere Kugel
     kugel1 = Sphere(Point(0.75, -0.1, 1.0), 0.6, Material(rot))
-    kugel2 = Sphere(Point(-0.75, -0.1, 2.5), 0.6, Material(gelb))
+    #hintere Kugel
+    kugel2 = Sphere(Point(-0.75, -0.1, 2.25), 0.6, Material(lila))
 
     #Schachbrett-Ebene
     braun = Color.from_hex("#4A3601")
@@ -55,6 +58,13 @@ def main():
     C = Point(1.0, -2.0, 3.0)
     blau = Color.from_hex("#0000FF")
     dreieck = Triangle(A, B, C, Material(blau))
+
+    #TestDreieck
+    A2 = Point(-0.75, -0.1, 2.5)
+    B2 = Point(1.0, 1.0, 4.5)
+    C2 = Point(3.0, -3.0, 4.5)
+
+    dreieck2 = Triangle(A2, B2, C2, Material(blau))
 
     OBJECTS = [
         #Schachbrett-Ebene
