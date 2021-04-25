@@ -43,7 +43,6 @@ class RenderEngine:
                 # eine Symmetrie des Algorithmuses soll in CG vorhanden sein
                 # sodass es richtig implementiert ist
 
-
             ###################################################################################
             # Fortschrittszähler ausgeben, falls zaehler=True
             if zaehler:
@@ -99,7 +98,7 @@ class RenderEngine:
         # Schnittpunkt vorhanden: Punkt berechnen, Normale berechnen, gesamte Farbinformation
         # berechnen
         # Kollisionspunkt mit dem Objekt
-        hit_pos = ray.origin + ray.direction * dist_hit # gerade Gleichung: y = mx +c
+        hit_pos = ray.origin + ray.direction * dist_hit  # gerade Gleichung: y = mx +c
         # berechne diffuse und spekular--> wie die Normale auf getroffenen Punkt lautet
         hit_normal = obj_hit.normal(hit_pos)
         color += self.color_at_hit(obj_hit, hit_pos, hit_normal, scene)
@@ -116,13 +115,13 @@ class RenderEngine:
                     ray.direction - 2 * ray.direction.dot_product(hit_normal) * hit_normal
             )
 
-            #Erzeuge neuen reflektierten Strahl
+            # Erzeuge neuen reflektierten Strahl
             new_ray = Ray(new_ray_pos, new_ray_dir)
 
-            #Aufaddieren der durch den Reflektionskoeffizienten abgeschwächten Farb-
-            #information des reflektierten rays (Strahls)
+            # Aufaddieren der durch den Reflektionskoeffizienten abgeschwächten Farb-
+            # information des reflektierten rays (Strahls)
             color += (
-                self.ray_trace(new_ray, scene, depth + 1 ) * obj_hit.material.reflection
+                    self.ray_trace(new_ray, scene, depth + 1) * obj_hit.material.reflection
             )
 
         return color
@@ -144,9 +143,8 @@ class RenderEngine:
                 # comparison with is None or is not None
                 # ausrufezeichen sind nicht so übersichtlich
                 if distance is not None and (obj_hit is None or distance < dist_min):
-                    dist_min = distance # neu füllen
+                    dist_min = distance  # neu füllen
                     obj_hit = obj
-
 
             if obj.name == "Dreieck":
                 distance = obj.intersect_t(ray)
@@ -155,7 +153,6 @@ class RenderEngine:
                     obj_hit = obj
 
         return dist_min, obj_hit
-
 
     def color_at_hit(self, obj_hit, hit_pos, normal, scene):
         # Farbinformation des getroffenen Objekts im Schnittpunkt ermitteln
@@ -191,17 +188,16 @@ class RenderEngine:
 
             # Blinn Phong-Beleuchtungsmodell fasst die drei Beiträgt zusammen (ambient, diffuse und speuklar)-->wird
             # Praktikum 2
-            halfway_vector = (L.direction + augpunkt).normalize() # wird später im
+            halfway_vector = (L.direction + augpunkt).normalize()  # wird später im
 
             cos2 = normal.dot_product(halfway_vector)
-            #Phong Parameter
-            #Kupfer: N=13
-            #Gold/Silber: N=51
-            #Schwarzes Plastik: N=32
+            # Phong Parameter
+            # Kupfer: N=13
+            # Gold/Silber: N=51
+            # Schwarzes Plastik: N=32
             N = 50
             blinnPhong = (light.color * material.specular * max(cos2, 0) ** N)
 
             color += blinnPhong
 
         return color
-

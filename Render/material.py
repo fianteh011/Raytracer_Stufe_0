@@ -4,6 +4,7 @@ from Help.color import Color
 class Material:
     """Material hat zunächst nur eine Farbe, es gibt noch keine Interaktion mit Licht
      und Eigenschaften, die sich mit Licht interargieren wird"""
+
     # beginnend mit diesen Werten
     # ambient = 0.05
     # diffuse = 1.0
@@ -26,6 +27,7 @@ class Material:
     def color_at(self, position):
         return self.color
 
+
 class SchachbrettMaterial:
     """Material mit einem Schachbrettmuster basierend auf zei Farben"""
 
@@ -44,7 +46,6 @@ class SchachbrettMaterial:
         self.diffuse = diffuse
         self.specular = specular
         self.reflection = reflection
-
 
     def color_at(self, position):
         """Schachbrettmuster füllen"""

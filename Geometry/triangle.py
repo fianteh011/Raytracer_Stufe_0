@@ -1,6 +1,6 @@
 class Triangle:
 
-    def __init__(self, pointA, pointB, pointC, material ):
+    def __init__(self, pointA, pointB, pointC, material):
         self.pointA = pointA
         self.pointB = pointB
         self.pointC = pointC
@@ -27,7 +27,7 @@ class Triangle:
         schnittpunkt = a + (bruchOben / bruchUnten) * u
 
         if self.pointintriangle(schnittpunkt):
-            abstand = schnittpunkt - ray.origin
+            abstand = schnittpunkt - a
             return abstand.magnitude()
         return None
 
