@@ -1,7 +1,5 @@
 # Praktikum 2
 
-# Praktikum 2
-
 ## Aufgabe 1
 ### Blinn-Phong-Shading 
 
