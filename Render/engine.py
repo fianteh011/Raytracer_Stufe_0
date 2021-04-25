@@ -131,7 +131,7 @@ class RenderEngine:
         # Ambientes Licht = Grundhelligkeit der Szene
         color = material.ambient * Color.from_hex("#000000")
         # specular potenz:
-        spekular_k = 50.00 # wird später im Praktikum 2
+        # spekular_k = 50.00 # wird später im Praktikum 2
 
         # gehe in jedem Licht duch und berechne schatten
         for light in scene.lights:
@@ -155,7 +155,8 @@ class RenderEngine:
 
             # Blinn Phong-Beleuchtungsmodell fasst die drei Beiträgt zusammen (ambient, diffuse und speuklar)-->wird
             # später im Praktikum 2
-            half_vector = (new_ray_l.direction + augpunkt).normalize()
-            color += ((light.color * material.specular) * max(normal.dot_product(half_vector), 0))
+            # half_vector = (to_lights.direction + to_cam).normalize() # wird später im
+            # Praktikum 2 color += ((light.color * material.specular) * max(normal.dot_product(half_vector),
+            # 0))# wird später im Praktikum 2
         return color
 
