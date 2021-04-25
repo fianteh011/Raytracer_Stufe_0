@@ -56,6 +56,13 @@ def main():
     blau = Color.from_hex("#0000FF")
     dreieck = Triangle(A, B, C, Material(blau))
 
+    #TestDreieck
+    A2 = Point(-0.75, -0.1, 2.5)
+    B2 = Point(1.0, 1.0, 4.5)
+    C2 = Point(3.0, -3.0, 4.5)
+
+    dreieck2 = Triangle(A2, B2, C2, Material(blau))
+
     OBJECTS = [
         #Schachbrett-Ebene
         grundebene,

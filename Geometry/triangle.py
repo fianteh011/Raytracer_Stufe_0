@@ -21,29 +21,33 @@ class Triangle:
         a = ray.origin
         u = ray.direction
 
-        o = n.dot_product(self.pointA - a)
-        bruch = (o / n.dot_product(u))
-        ts = a + bruch * u
+        #Schnittpunkt-Rechnung CG_1 Folie 20
+        bruchOben = n.dot_product(self.pointA - a)
+        bruchUnten = n.dot_product(u)
+        schnittpunkt = a + (bruchOben / bruchUnten) * u
 
-        if self.pointintriangle(ts):
-            abstand = ts - ray.origin
+        if self.pointintriangle(schnittpunkt):
+            abstand = schnittpunkt - ray.origin
             return abstand.magnitude()
         return None
 
     def pointintriangle(self, punkt):
         """zum Test, ob ein gegebener Punkt im gegebenen Dreieck liegt"""
-        xs = punkt
-        b = self.pointB - self.pointA
-        c = self.pointC - self.pointA
-        p = xs - self.pointA
+        #U ausrechnen Formel aus CG_1 - Folie 22
+        uo = (punkt.dot_product(self.pointB) * (self.pointC.magnitude() ** 2)) - (self.pointC.dot_product(self.pointB) * punkt.dot_product(self.pointC))
+        uu = ((self.pointB.magnitude() ** 2) * (self.pointC.magnitude() ** 2)) - (self.pointC.dot_product(self.pointB) ** 2)
+        u = uo / uu
 
-        quadC = (c.magnitude() ** 2)
-        quadB = (b.magnitude() ** 2)
-        u = (p.dot_product(b) * quadC - c.dot_product(b) * p.dot_product(c)) / quadB * quadC - (c.dot_product(b) ** 2)
-        v = (p.dot_product(c) * quadB - c.dot_product(b) * p.dot_product(b)) / quadB * quadC - (c.dot_product(b) ** 2)
+        #v ausrechnen Formel aus CG_1 - Folie 22
+        vo = (punkt.dot_product(self.pointC) * (self.pointB.magnitude() ** 2)) - (self.pointC.dot_product(self.pointB) * punkt.dot_product(self.pointB))
+        vu = uu
+        v = vo / vu
 
-        if 0 <= u and u <= 1 or 0 <= v and v <= 1 or 0 <= u+v and u+v <= 1:
+        #print("u: ", u)
+        #print("v: ", v)
+
+        #liegt der Punkt im Dreieck?
+        if 0 <= u <= 1 and 0 <= v <= 1 and 0 <= u+v <= 1:
             return True
         else:
             return False
-
