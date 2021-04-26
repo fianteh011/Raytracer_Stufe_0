@@ -15,7 +15,7 @@ from Geometry.triangle import Triangle
 ##### Anzeige des Renderfortschritts (True: mit Anzeige, False: ohne Anzeige)
 ZAEHLER = True
 
-SHOW = False
+SHOW = True
 ##### Bildformat festlegen (für Tests kleines Ausgabeformat, um Renderzeit zu sparen)
 # Grossbuchstaben sind Konstanten !
 WIDTH = 800 #320 #800 #1600
@@ -59,10 +59,10 @@ def main():
     blau = Color.from_hex("#0000FF")
     dreieck = Triangle(A, B, C, Material(blau))
 
-    #TestDreieck
-    A2 = Point(-0.75, -0.1, 2.5)
-    B2 = Point(1.0, 1.0, 4.5)
-    C2 = Point(3.0, -3.0, 4.5)
+    #TestDreieck: Point(-4.0, -2.0,3.0), Point(-1.0,0.0,3.0), Point(1.0,-2.0,3.0)
+    A2 = Point(-4.0, -2.0, 3.0)
+    B2 = Point(-1.0, 0.0, 3.0)
+    C2 = Point(1.0,-2.0, 3.0)
 
     dreieck2 = Triangle(A2, B2, C2, Material(blau))
 
@@ -74,7 +74,7 @@ def main():
         # gelbe kugel2
         kugel2,
         #blaues Dreieck
-        dreieck
+        dreieck2
     ]
     # Punktlichter: Keine Beleuchtung nur Objektfarbe
     ##Farben

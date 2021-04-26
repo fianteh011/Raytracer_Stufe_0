@@ -9,7 +9,7 @@ class RenderEngine:
     """Erzeugt Pixel als array"""
 
     ##Stufe_3
-    MAX_DEPTH = 5
+    MAX_DEPTH = 3
     MIN_DISPLACE = 0.0001
 
     def rendertask(self, scene, zaehler):
@@ -104,9 +104,10 @@ class RenderEngine:
         hit_normal = obj_hit.normal(hit_pos)
         color += self.color_at_hit(obj_hit, hit_pos, hit_normal, scene)
 
+        # Praktikum 2 - Aufgabe 2: reflektierter Strahl
         ##Stufe_3 Erweiterung
         if depth < self.MAX_DEPTH:
-            # Reflektionspunkt mit Störtem verändern, um Selbstreflektion zu vermeiden
+            # Reflektionspunkt mit Störterm verändern, um Selbstreflektion zu vermeiden
             new_ray_pos = hit_pos + hit_normal * self.MIN_DISPLACE
 
             # Richtung des reflektierten rays (Strahls) berechnen (CG_2 - Folie 16)
@@ -147,7 +148,7 @@ class RenderEngine:
                     dist_min = distance # neu füllen
                     obj_hit = obj
 
-
+            # Praktikum 2 - Aufgabe 3: Dreieck hinzugefügt
             if obj.name == "Dreieck":
                 distance = obj.intersect_t(ray)
                 if distance is not None and (obj_hit is None or distance < dist_min):
@@ -190,7 +191,7 @@ class RenderEngine:
             color += lambert
 
             # Blinn Phong-Beleuchtungsmodell fasst die drei Beiträgt zusammen (ambient, diffuse und speuklar)-->wird
-            # Praktikum 2
+            # Praktikum 2 - Aufgabe 1
             halfway_vector = (L.direction + augpunkt).normalize() # wird später im
 
             cos2 = normal.dot_product(halfway_vector)
@@ -198,7 +199,7 @@ class RenderEngine:
             #Kupfer: N=13
             #Gold/Silber: N=51
             #Schwarzes Plastik: N=32
-            N = 50
+            N = 51
             blinnPhong = (light.color * material.specular * max(cos2, 0) ** N)
 
             color += blinnPhong

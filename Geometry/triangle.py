@@ -1,3 +1,4 @@
+# Praktikum 2 - Aufgabe 3: Dreieck
 class Triangle:
 
     def __init__(self, pointA, pointB, pointC, material ):
@@ -26,7 +27,7 @@ class Triangle:
         bruchUnten = n.dot_product(u)
         schnittpunkt = a + (bruchOben / bruchUnten) * u
 
-        if self.pointintriangle(schnittpunkt):
+        if (bruchOben / bruchUnten) >= 0 and self.pointintriangle(schnittpunkt):
             abstand = schnittpunkt - ray.origin
             return abstand.magnitude()
         return None
